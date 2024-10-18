@@ -1,15 +1,19 @@
-FROM debian:bullseye-slim
+FROM alpine:3.14
 
-WORKDIR /app
+# Устанавливаем необходимые пакеты
+RUN apk add --no-cache libc6-compat
 
-# Скопируйте исполняемый файл PocketBase в рабочую директорию контейнера
-COPY ./pocketbase /app/pocketbase
+# Копируем бинарный файл PocketBase
+COPY pocketbase /pocketbase
 
-# Убедитесь, что файл имеет права на выполнение
-RUN chmod +x /app/pocketbase
+# Создаем папку для данных
+RUN mkdir /pb_data
 
-# Открываем порт 8090
+# Устанавливаем рабочую директорию
+WORKDIR /
+
+# Открываем порт
 EXPOSE 8090
 
-# Запускаем PocketBase
-CMD ["./pocketbase", "serve", "--http", "0.0.0.0:8090"]
+# Команда запуска
+CMD ["/pocketbase", "serve", "--http=0.0.0.0:8090", "--dir=/pb_data"]
