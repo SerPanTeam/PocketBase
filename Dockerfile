@@ -13,7 +13,7 @@ RUN mkdir /pb_data
 WORKDIR /
 
 # Открываем порт
-EXPOSE 8090
+EXPOSE 8080
 
 # Команда запуска
-CMD ["/pocketbase", "serve", "--http=0.0.0.0:8090", "--dir=/pb_data"]
+CMD ["/pocketbase", "serve", "--http=0.0.0.0:8080", "--dir", "/pb_data"]
